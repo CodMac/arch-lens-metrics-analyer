@@ -29,7 +29,16 @@ func main() {
 	fmt.Println("\n--- God Class Detection ---")
 	godClasses := detector.DetectGodClasses(graph)
 	for _, res := range godClasses {
-		fmt.Printf("[GOD CLASS] %s (ATFD: %d, TCC: %.2f)\n", res.ClassQN, res.ATFD, res.TCC)
+		status := ""
+		if res.IsGodFormula {
+			status += "[Formula]"
+		}
+		if res.IsConcentrationWarn {
+			status += "[Concentration]"
+		}
+		fmt.Printf("[GOD CLASS] %s %s\n", res.ClassQN, status)
+		fmt.Printf("    Metrics: WMC=%d, ATFD=%d, TCC=%.2f, Density=%.2f\n",
+			res.WMC, res.ATFD, res.TCC, res.MethodDensity)
 	}
 
 	// 2. Detect Circular Dependencies (Class level)

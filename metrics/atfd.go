@@ -8,7 +8,7 @@ import (
 
 // CalculateATFD computes Access to Foreign Data for a class
 func CalculateATFD(clsQN string, g *core.Graph) int {
-	externalData := make(map[string]bool)
+	externalClasses := make(map[string]bool)
 	methods := FindContainedElements(clsQN, model.Method, g)
 
 	for _, m := range methods {
@@ -18,7 +18,7 @@ func CalculateATFD(clsQN string, g *core.Graph) int {
 			if edge.Type == model.Use && edge.Target.Kind == model.Field {
 				owner := g.GetOwnerClass(edge.Target.QualifiedName)
 				if owner != "" && owner != clsQN {
-					externalData[edge.Target.QualifiedName] = true
+					externalClasses[owner] = true
 				}
 			}
 			// 2. Getter Method Call (Heuristic)
@@ -26,13 +26,13 @@ func CalculateATFD(clsQN string, g *core.Graph) int {
 				if IsGetter(edge.Target.Name) {
 					owner := g.GetOwnerClass(edge.Target.QualifiedName)
 					if owner != "" && owner != clsQN {
-						externalData[edge.Target.QualifiedName] = true
+						externalClasses[owner] = true
 					}
 				}
 			}
 		}
 	}
-	return len(externalData)
+	return len(externalClasses)
 }
 
 func IsGetter(name string) bool {
