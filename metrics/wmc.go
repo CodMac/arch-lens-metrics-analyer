@@ -17,13 +17,15 @@ func CalculateWMC(clsQN string, g *core.Graph) int {
 	all := append(methods, blocks...)
 
 	for _, m := range all {
+		complexity := 1 // Default complexity
 		if m.Extra != nil {
-			if complexity, ok := m.Extra.Mores[MethodComplexity].(float64); ok {
-				wmc += int(complexity)
-			} else if complexity, ok := m.Extra.Mores[MethodComplexity].(int); ok {
-				wmc += complexity
+			if val, ok := m.Extra.Mores[MethodComplexity].(float64); ok {
+				complexity = int(val)
+			} else if val, ok := m.Extra.Mores[MethodComplexity].(int); ok {
+				complexity = val
 			}
 		}
+		wmc += complexity
 	}
 	return wmc
 }

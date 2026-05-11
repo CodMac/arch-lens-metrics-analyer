@@ -7,7 +7,22 @@ import (
 
 // CalculateTCC computes Tight Class Cohesion for a class
 func CalculateTCC(clsQN string, g *core.Graph) float64 {
-	methods := FindContainedElements(clsQN, model.Method, g)
+	allMethods := FindContainedElements(clsQN, model.Method, g)
+
+	// Filter: Exclude constructors
+	var methods []*model.CodeElement
+	for _, m := range allMethods {
+		isConstructor := false
+		if m.Extra != nil {
+			if val, ok := m.Extra.Mores["java.method.is_constructor"].(bool); ok && val {
+				isConstructor = true
+			}
+		}
+		if !isConstructor {
+			methods = append(methods, m)
+		}
+	}
+
 	if len(methods) <= 1 {
 		return 1.0
 	}
