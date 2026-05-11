@@ -3,9 +3,10 @@ package loader
 import (
 	"bufio"
 	"encoding/json"
+	"os"
+
 	"github.com/CodMac/arch-lens-dep-analyer/model"
 	"github.com/CodMac/arch-lens-metrics-analyer/core"
-	"os"
 )
 
 func LoadGraph(elementPath, relationPath string) (*core.Graph, error) {
@@ -53,13 +54,20 @@ func loadRelations(path string, g *core.Graph) error {
 		if err := json.Unmarshal([]byte(scanner.Text()), &r); err != nil {
 			continue
 		}
-		// Ensure elements are indexed (especially external ones)
-		if _, ok := g.Elements[r.Source.QualifiedName]; !ok {
+
+		// 修正：优先使用已加载的完整 Element，不覆盖
+		if fullSource, ok := g.Elements[r.Source.QualifiedName]; ok {
+			r.Source = fullSource
+		} else {
 			g.AddElement(r.Source)
 		}
-		if _, ok := g.Elements[r.Target.QualifiedName]; !ok {
+
+		if fullTarget, ok := g.Elements[r.Target.QualifiedName]; ok {
+			r.Target = fullTarget
+		} else {
 			g.AddElement(r.Target)
 		}
+
 		g.AddRelation(&r)
 	}
 	return scanner.Err()

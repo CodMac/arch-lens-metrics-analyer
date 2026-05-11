@@ -1,9 +1,10 @@
 package detector
 
 import (
+	"strings"
+
 	"github.com/CodMac/arch-lens-dep-analyer/model"
 	"github.com/CodMac/arch-lens-metrics-analyer/core"
-	"strings"
 )
 
 type CircularDependencyResult struct {

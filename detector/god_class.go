@@ -19,11 +19,23 @@ type GodClassResult struct {
 func DetectGodClasses(g *core.Graph) []GodClassResult {
 	var results []GodClassResult
 
+	// Helper to get package name for any element
+	getPkg := func(qn string) string {
+		curr := qn
+		if e, ok := g.Elements[curr]; ok && e.Kind == model.Method {
+			curr = g.GetOwnerClass(curr)
+		}
+		if curr == "" {
+			return ""
+		}
+		return getPackageName(curr)
+	}
+
 	// Pre-calculate package method counts for Rule 2
 	pkgMethodCounts := make(map[string]int)
 	for _, e := range g.Elements {
 		if e.Kind == model.Method {
-			pkg := getPackageName(e.QualifiedName)
+			pkg := getPkg(e.QualifiedName)
 			if pkg != "" {
 				pkgMethodCounts[pkg]++
 			}
@@ -41,7 +53,7 @@ func DetectGodClasses(g *core.Graph) []GodClassResult {
 
 			// Rule 2: Concentration
 			classMethods := metrics.FindContainedElements(qn, model.Method, g)
-			pkg := getPackageName(qn)
+			pkg := getPkg(qn)
 			pkgMethods := pkgMethodCounts[pkg]
 
 			methodDensity := 0.0
