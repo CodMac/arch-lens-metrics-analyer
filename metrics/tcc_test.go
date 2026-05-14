@@ -9,10 +9,10 @@ import (
 )
 
 func TestCalculateTCC_Scenarios(t *testing.T) {
-	elemPath := filepath.Join("..", "testdata", "x", "java", "tcc", "element.jsonl")
-	relPath := filepath.Join("..", "testdata", "x", "java", "tcc", "relation.jsonl")
+	tccDir := filepath.Join("..", "testdata", "x", "java", "tcc")
+	elemPath := filepath.Join(tccDir, "element.jsonl")
 
-	graph, err := loader.LoadGraph(elemPath, relPath)
+	graph, err := loader.LoadGraph(elemPath, tccDir)
 	if err != nil {
 		t.Fatalf("Failed to load graph: %v", err)
 	}

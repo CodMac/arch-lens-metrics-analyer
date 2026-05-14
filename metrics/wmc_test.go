@@ -8,10 +8,10 @@ import (
 )
 
 func TestCalculateWMC_Scenarios(t *testing.T) {
-	elemPath := filepath.Join("..", "testdata", "x", "java", "wmc", "element.jsonl")
-	relPath := filepath.Join("..", "testdata", "x", "java", "wmc", "relation.jsonl")
+	wmcDir := filepath.Join("..", "testdata", "x", "java", "wmc")
+	elemPath := filepath.Join(wmcDir, "element.jsonl")
 
-	graph, err := loader.LoadGraph(elemPath, relPath)
+	graph, err := loader.LoadGraph(elemPath, wmcDir)
 	if err != nil {
 		t.Fatalf("Failed to load graph: %v", err)
 	}

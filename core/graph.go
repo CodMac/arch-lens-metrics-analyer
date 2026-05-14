@@ -1,8 +1,9 @@
 package core
 
 import (
-	"github.com/CodMac/arch-lens-dep-analyer/model"
 	"strings"
+
+	"github.com/CodMac/arch-lens-dep-analyer/model"
 )
 
 type Graph struct {

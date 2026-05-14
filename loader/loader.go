@@ -4,20 +4,33 @@ import (
 	"bufio"
 	"encoding/json"
 	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/CodMac/arch-lens-dep-analyer/model"
 	"github.com/CodMac/arch-lens-metrics-analyer/core"
 )
 
-func LoadGraph(elementPath, relationPath string) (*core.Graph, error) {
+func LoadGraph(elementPath, relationDir string) (*core.Graph, error) {
 	g := core.NewGraph()
 
 	if err := loadElements(elementPath, g); err != nil {
 		return nil, err
 	}
 
-	if err := loadRelations(relationPath, g); err != nil {
+	// 查找所有 relation_*.jsonl 文件
+	entries, err := os.ReadDir(relationDir)
+	if err != nil {
 		return nil, err
+	}
+
+	for _, entry := range entries {
+		if !entry.IsDir() && strings.HasPrefix(entry.Name(), "relation_") && strings.HasSuffix(entry.Name(), ".jsonl") {
+			relPath := filepath.Join(relationDir, entry.Name())
+			if err := loadRelations(relPath, g); err != nil {
+				return nil, err
+			}
+		}
 	}
 
 	return g, nil

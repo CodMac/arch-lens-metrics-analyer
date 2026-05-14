@@ -8,10 +8,10 @@ import (
 )
 
 func TestCalculateATFD_Scenarios(t *testing.T) {
-	elemPath := filepath.Join("..", "testdata", "x", "java", "atfd", "element.jsonl")
-	relPath := filepath.Join("..", "testdata", "x", "java", "atfd", "relation.jsonl")
+	atfdDir := filepath.Join("..", "testdata", "x", "java", "atfd")
+	elemPath := filepath.Join(atfdDir, "element.jsonl")
 
-	graph, err := loader.LoadGraph(elemPath, relPath)
+	graph, err := loader.LoadGraph(elemPath, atfdDir)
 	if err != nil {
 		t.Fatalf("Failed to load graph: %v", err)
 	}
