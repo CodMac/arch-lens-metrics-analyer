@@ -9,7 +9,7 @@ import (
 )
 
 func TestCalculateTCC_Scenarios(t *testing.T) {
-	tccDir := filepath.Join("..", "testdata", "x", "java", "tcc")
+	tccDir := filepath.Join("..", "testdata", "x", "java", "metrics", "tcc")
 	elemPath := filepath.Join(tccDir, "element.jsonl")
 
 	graph, err := loader.LoadGraph(elemPath, tccDir)

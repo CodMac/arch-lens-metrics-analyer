@@ -8,7 +8,7 @@ import (
 )
 
 func TestCalculateWMC_Scenarios(t *testing.T) {
-	wmcDir := filepath.Join("..", "testdata", "x", "java", "wmc")
+	wmcDir := filepath.Join("..", "testdata", "x", "java", "metrics", "wmc")
 	elemPath := filepath.Join(wmcDir, "element.jsonl")
 
 	graph, err := loader.LoadGraph(elemPath, wmcDir)
