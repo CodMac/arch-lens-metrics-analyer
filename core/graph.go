@@ -32,6 +32,7 @@ func (g *Graph) AddElement(e *model.CodeElement) {
 
 func (g *Graph) AddRelation(r *model.DependencyRelation) {
 	g.Relations = append(g.Relations, r)
+
 	src := r.Source.QualifiedName
 	tgt := r.Target.QualifiedName
 	g.OutEdges[src] = append(g.OutEdges[src], r)
