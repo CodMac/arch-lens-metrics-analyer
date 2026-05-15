@@ -41,7 +41,24 @@ func main() {
 			res.WMC, res.ATFD, res.TCC, res.MethodDensity)
 	}
 
-	// 2. Detect Circular Dependencies (Class level)
+	// 2. Detect God Files
+	fmt.Println("\n--- God File Detection ---")
+	godFiles := detector.DetectGodFiles(graph)
+	for _, res := range godFiles {
+		status := ""
+		if res.IsHyperScale {
+			status += "[HyperScale]"
+		}
+		if res.IsScattered {
+			status += "[Scattered]"
+		}
+		fmt.Printf("[GOD FILE] %s %s\n", res.FileQN, status)
+		fmt.Printf("    Metrics: LOC=%d, FCI=%d, NDE=%d, CDC=%d (Root: %s)\n",
+			res.LOC, res.FCI, res.NDE, res.CDC, res.ProjectRoot)
+	}
+
+	// 3. Detect Circular Dependencies (Class level)
+
 	fmt.Println("\n--- Circular Dependency Detection (Class Level) ---")
 	cycles := detector.DetectCircularDependencies(graph, model.Class)
 	for _, comp := range cycles.Components {

@@ -56,6 +56,41 @@ func (g *Graph) GetOwnerClass(qn string) string {
 	}
 }
 
+// GetElementPackage returns the QN of the package containing this element (especially for FILE)
+func (g *Graph) GetElementPackage(qn string) string {
+	// For File, check incoming CONTAIN edges from Package
+	if e, ok := g.Elements[qn]; ok && e.Kind == model.File {
+		for _, edge := range g.InEdges[qn] {
+			if edge.Type == model.Contain && edge.Source.Kind == model.Package {
+				return edge.Source.QualifiedName
+			}
+		}
+	}
+	// For others, use parent QN logic
+	return getPackageFromQN(qn)
+}
+
+func (g *Graph) GetFileLOC(fileQN string) int {
+	if e, ok := g.Elements[fileQN]; ok && e.Kind == model.File {
+		if e.Extra != nil {
+			if val, ok := e.Extra.Mores["java.file.metrics.loc"].(float64); ok {
+				return int(val)
+			} else if val, ok := e.Extra.Mores["java.file.metrics.loc"].(int); ok {
+				return val
+			}
+		}
+	}
+	return 0
+}
+
+func getPackageFromQN(qn string) string {
+	idx := strings.LastIndex(qn, ".")
+	if idx == -1 {
+		return ""
+	}
+	return qn[:idx]
+}
+
 func IsClassLike(k model.ElementKind) bool {
 	return k == model.Class || k == model.Interface || k == model.Enum || k == model.KAnnotation || k == model.AnonymousClass
 }
