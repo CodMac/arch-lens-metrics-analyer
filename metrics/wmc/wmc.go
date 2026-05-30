@@ -1,8 +1,9 @@
-package metrics
+package wmc
 
 import (
 	"github.com/CodMac/arch-lens-dep-analyer/model"
 	"github.com/CodMac/arch-lens-metrics-analyer/core"
+	"github.com/CodMac/arch-lens-metrics-analyer/metrics/atfd"
 )
 
 const MethodComplexity = "java.method.metrics.complexity"
@@ -11,8 +12,8 @@ const MethodComplexity = "java.method.metrics.complexity"
 func CalculateWMC(clsQN string, g *core.Graph) int {
 	wmc := 0
 	// Include Methods and ScopeBlocks (initializers)
-	methods := FindContainedElements(clsQN, model.Method, g)
-	blocks := FindContainedElements(clsQN, model.ScopeBlock, g)
+	methods := atfd.FindContainedElements(clsQN, model.Method, g)
+	blocks := atfd.FindContainedElements(clsQN, model.ScopeBlock, g)
 
 	all := append(methods, blocks...)
 

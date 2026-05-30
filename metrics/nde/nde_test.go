@@ -1,4 +1,4 @@
-package metrics
+package nde
 
 import (
 	"path/filepath"
@@ -8,7 +8,7 @@ import (
 )
 
 func TestCalculateNDE_Scenarios(t *testing.T) {
-	ndeDir := filepath.Join("..", "testdata", "x", "java", "metrics", "nde", "dep-out")
+	ndeDir := filepath.Join("..", "..", "testdata", "x", "java", "metrics", "nde", "dep-out")
 	elemPath := filepath.Join(ndeDir, "element.jsonl")
 
 	graph, err := loader.LoadGraph(elemPath, ndeDir)

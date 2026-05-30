@@ -1,4 +1,4 @@
-package metrics
+package fci
 
 import (
 	"path/filepath"
@@ -8,7 +8,7 @@ import (
 )
 
 func TestCalculateFCI_Scenarios(t *testing.T) {
-	fciDir := filepath.Join("..", "testdata", "x", "java", "metrics", "fci", "dep-out")
+	fciDir := filepath.Join("..", "..", "testdata", "x", "java", "metrics", "fci", "dep-out")
 	elemPath := filepath.Join(fciDir, "element.jsonl")
 
 	graph, err := loader.LoadGraph(elemPath, fciDir)

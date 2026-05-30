@@ -4,6 +4,8 @@ import (
 	"github.com/CodMac/arch-lens-dep-analyer/model"
 	"github.com/CodMac/arch-lens-metrics-analyer/core"
 	"github.com/CodMac/arch-lens-metrics-analyer/metrics"
+	"github.com/CodMac/arch-lens-metrics-analyer/metrics/fci"
+	"github.com/CodMac/arch-lens-metrics-analyer/metrics/nde"
 )
 
 type GodFileResult struct {
@@ -23,8 +25,8 @@ func DetectGodFiles(g *core.Graph) []GodFileResult {
 	for qn, e := range g.Elements {
 		if e.Kind == model.File {
 			loc := metrics.CalculateFileLOC(qn, g)
-			nde := metrics.CalculateNDE(qn, g)
-			fci := metrics.CalculateFCI(qn, g)
+			nde := nde.CalculateNDE(qn, g)
+			fci := fci.CalculateFCI(qn, g)
 			cdc, root := metrics.CalculateCDC(qn, g)
 
 			// Rule 1: Hyper-Scale

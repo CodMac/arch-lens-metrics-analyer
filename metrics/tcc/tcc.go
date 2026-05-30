@@ -1,13 +1,14 @@
-package metrics
+package tcc
 
 import (
 	"github.com/CodMac/arch-lens-dep-analyer/model"
 	"github.com/CodMac/arch-lens-metrics-analyer/core"
+	"github.com/CodMac/arch-lens-metrics-analyer/metrics/atfd"
 )
 
 // CalculateTCC computes Tight Class Cohesion for a class
 func CalculateTCC(clsQN string, g *core.Graph) float64 {
-	allMethods := FindContainedElements(clsQN, model.Method, g)
+	allMethods := atfd.FindContainedElements(clsQN, model.Method, g)
 
 	// Filter: Exclude constructors
 	var methods []*model.CodeElement

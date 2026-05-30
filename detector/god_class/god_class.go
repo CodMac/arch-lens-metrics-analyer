@@ -1,9 +1,12 @@
-package detector
+package god_class
 
 import (
 	"github.com/CodMac/arch-lens-dep-analyer/model"
 	"github.com/CodMac/arch-lens-metrics-analyer/core"
-	"github.com/CodMac/arch-lens-metrics-analyer/metrics"
+	"github.com/CodMac/arch-lens-metrics-analyer/detector"
+	"github.com/CodMac/arch-lens-metrics-analyer/metrics/atfd"
+	"github.com/CodMac/arch-lens-metrics-analyer/metrics/tcc"
+	"github.com/CodMac/arch-lens-metrics-analyer/metrics/wmc"
 )
 
 type GodClassResult struct {
@@ -28,7 +31,7 @@ func DetectGodClasses(g *core.Graph) []GodClassResult {
 		if curr == "" {
 			return ""
 		}
-		return getPackageName(curr)
+		return detector.getPackageName(curr)
 	}
 
 	// Pre-calculate package method counts for Rule 2
@@ -44,15 +47,15 @@ func DetectGodClasses(g *core.Graph) []GodClassResult {
 
 	for qn, e := range g.Elements {
 		if e.Kind == model.Class {
-			atfd := metrics.CalculateATFD(qn, g)
-			tcc := metrics.CalculateTCC(qn, g)
-			wmc := metrics.CalculateWMC(qn, g)
+			atfd := atfd.CalculateATFD(qn, g)
+			tcc := tcc.CalculateTCC(qn, g)
+			wmc := wmc.CalculateWMC(qn, g)
 
 			// Rule 1: God Formula
 			isGodFormula := wmc > 47 && atfd > 5 && tcc < 0.33
 
 			// Rule 2: Concentration
-			classMethods := metrics.FindContainedElements(qn, model.Method, g)
+			classMethods := atfd.FindContainedElements(qn, model.Method, g)
 			pkg := getPkg(qn)
 			pkgMethods := pkgMethodCounts[pkg]
 

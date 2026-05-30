@@ -1,4 +1,4 @@
-package metrics
+package nde
 
 import (
 	"github.com/CodMac/arch-lens-dep-analyer/model"

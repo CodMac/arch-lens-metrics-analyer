@@ -3,10 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
+
 	"github.com/CodMac/arch-lens-dep-analyer/model"
 	"github.com/CodMac/arch-lens-metrics-analyer/detector"
+	"github.com/CodMac/arch-lens-metrics-analyer/detector/god_class"
 	"github.com/CodMac/arch-lens-metrics-analyer/loader"
-	"log"
 )
 
 func main() {
@@ -27,7 +29,7 @@ func main() {
 
 	// 1. Detect God Classes
 	fmt.Println("\n--- God Class Detection ---")
-	godClasses := detector.DetectGodClasses(graph)
+	godClasses := god_class.DetectGodClasses(graph)
 	for _, res := range godClasses {
 		status := ""
 		if res.IsGodFormula {

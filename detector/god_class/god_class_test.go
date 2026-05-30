@@ -1,4 +1,4 @@
-package detector
+package god_class
 
 import (
 	"path/filepath"
