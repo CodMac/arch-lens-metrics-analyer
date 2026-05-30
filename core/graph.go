@@ -70,19 +70,6 @@ func (g *Graph) GetElementPackage(qn string) string {
 	return getPackageFromQN(qn)
 }
 
-func (g *Graph) GetFileLOC(fileQN string) int {
-	if e, ok := g.Elements[fileQN]; ok && e.Kind == model.File {
-		if e.Extra != nil {
-			if val, ok := e.Extra.Mores["java.file.metrics.loc"].(float64); ok {
-				return int(val)
-			} else if val, ok := e.Extra.Mores["java.file.metrics.loc"].(int); ok {
-				return val
-			}
-		}
-	}
-	return 0
-}
-
 func getPackageFromQN(qn string) string {
 	idx := strings.LastIndex(qn, ".")
 	if idx == -1 {

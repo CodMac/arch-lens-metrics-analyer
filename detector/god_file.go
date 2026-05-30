@@ -22,7 +22,7 @@ func DetectGodFiles(g *core.Graph) []GodFileResult {
 
 	for qn, e := range g.Elements {
 		if e.Kind == model.File {
-			loc := g.GetFileLOC(qn)
+			loc := metrics.CalculateFileLOC(qn, g)
 			nde := metrics.CalculateNDE(qn, g)
 			fci := metrics.CalculateFCI(qn, g)
 			cdc, root := metrics.CalculateCDC(qn, g)

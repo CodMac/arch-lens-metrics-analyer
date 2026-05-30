@@ -9,8 +9,9 @@ import (
 func CalculateFCI(fileQN string, g *core.Graph) int {
 	fci := 0
 	for _, e := range g.Elements {
-		if e.Path == fileQN && (e.Kind == model.Method || e.Kind == model.ScopeBlock) {
+		if e.Path == fileQN && (e.Kind == model.Method) {
 			complexity := 1
+
 			if e.Extra != nil {
 				if val, ok := e.Extra.Mores[MethodComplexity].(float64); ok {
 					complexity = int(val)
@@ -22,15 +23,4 @@ func CalculateFCI(fileQN string, g *core.Graph) int {
 		}
 	}
 	return fci
-}
-
-// CalculateNDE computes Number of Declared Entities (all classes/interfaces in file)
-func CalculateNDE(fileQN string, g *core.Graph) int {
-	count := 0
-	for _, e := range g.Elements {
-		if e.Path == fileQN && core.IsClassLike(e.Kind) {
-			count++
-		}
-	}
-	return count
 }
