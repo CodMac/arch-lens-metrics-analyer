@@ -10,6 +10,11 @@ func CalculateFCI(fileQN string, g *core.Graph) int {
 	fci := 0
 	for _, e := range g.Elements {
 		if e.Path == fileQN && (e.Kind == model.Method) {
+			// Skip synthetic methods (like implicit constructors)
+			if e.IsFormSugar {
+				continue
+			}
+
 			complexity := 1
 
 			if e.Extra != nil {

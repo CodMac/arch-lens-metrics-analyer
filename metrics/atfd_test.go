@@ -8,7 +8,7 @@ import (
 )
 
 func TestCalculateATFD_Scenarios(t *testing.T) {
-	atfdDir := filepath.Join("..", "testdata", "x", "metrics", "java", "atfd")
+	atfdDir := filepath.Join("..", "testdata", "x", "metrics", "java", "atfd", "dep-out")
 	elemPath := filepath.Join(atfdDir, "element.jsonl")
 
 	graph, err := loader.LoadGraph(elemPath, atfdDir)
