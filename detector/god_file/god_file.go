@@ -1,4 +1,4 @@
-package detector
+package god_file
 
 import (
 	"github.com/CodMac/arch-lens-dep-analyer/model"

@@ -8,6 +8,7 @@ import (
 	"github.com/CodMac/arch-lens-dep-analyer/model"
 	"github.com/CodMac/arch-lens-metrics-analyer/detector"
 	"github.com/CodMac/arch-lens-metrics-analyer/detector/god_class"
+	"github.com/CodMac/arch-lens-metrics-analyer/detector/god_file"
 	"github.com/CodMac/arch-lens-metrics-analyer/loader"
 )
 
@@ -45,7 +46,7 @@ func main() {
 
 	// 2. Detect God Files
 	fmt.Println("\n--- God File Detection ---")
-	godFiles := detector.DetectGodFiles(graph)
+	godFiles := god_file.DetectGodFiles(graph)
 	for _, res := range godFiles {
 		status := ""
 		if res.IsHyperScale {
