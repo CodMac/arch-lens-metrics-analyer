@@ -5,6 +5,7 @@ import (
 	"github.com/CodMac/arch-lens-metrics-analyer/core"
 	"github.com/CodMac/arch-lens-metrics-analyer/metrics"
 	"github.com/CodMac/arch-lens-metrics-analyer/metrics/fci"
+	"github.com/CodMac/arch-lens-metrics-analyer/metrics/loc"
 	"github.com/CodMac/arch-lens-metrics-analyer/metrics/nde"
 )
 
@@ -24,7 +25,7 @@ func DetectGodFiles(g *core.Graph) []GodFileResult {
 
 	for qn, e := range g.Elements {
 		if e.Kind == model.File {
-			loc := metrics.CalculateFileLOC(qn, g)
+			loc := loc.CalculateFileLOC(qn, g)
 			nde := nde.CalculateNDE(qn, g)
 			fci := fci.CalculateFCI(qn, g)
 			cdc, root := metrics.CalculateCDC(qn, g)

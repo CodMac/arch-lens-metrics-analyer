@@ -1,4 +1,4 @@
-package metrics
+package loc
 
 import (
 	"path/filepath"
@@ -8,7 +8,7 @@ import (
 )
 
 func TestCalculateFileLOC_Scenarios(t *testing.T) {
-	locDir := filepath.Join("..", "testdata", "x", "java", "metrics", "loc", "dep-out")
+	locDir := filepath.Join("..", "..", "testdata", "x", "java", "metrics", "loc", "dep-out")
 	elemPath := filepath.Join(locDir, "element.jsonl")
 
 	graph, err := loader.LoadGraph(elemPath, locDir)
